@@ -1,0 +1,89 @@
+<div class="container mx-auto px-4 py-8 lg:px-8 relative">
+  <button
+    (click)="gotoAdmin()" class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-200"
+    aria-label="Accéder aux paramètres admin"
+  >
+    <mat-icon class="text-blue-600 text-3xl cursor-pointer">admin_panel_settings</mat-icon>
+  </button>
+  <h1 class="text-5xl font-extrabold text-gray-900 mb-12 text-center tracking-tight">
+    Actualités Récentes <mat-icon class="align-middle text-blue-600 ml-2">article</mat-icon>
+  </h1>
+
+  <div class="flex justify-center mb-8">
+  </div>
+  <div class="mb-8 flex justify-center">
+    <div class="relative inline-block text-left">
+      <label for="category-filter" class="sr-only">Filtrer par catégorie</label>
+      <select id="category-filter"
+              [(ngModel)]="selectedCategory"
+              (change)="filterByCategory()"
+              class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md shadow-sm appearance-none
+                          bg-white cursor-pointer hover:border-gray-400 transition duration-150 ease-in-out">
+        <option value="">Toutes les catégories</option>
+        <option *ngFor="let category of categories" [value]="category.nom">
+          {{ category.nom }}
+        </option>
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer
+                transform hover:-translate-y-1 hover:scale-102 border border-gray-100 relative">
+      <div *ngIf="article?.categorie?.nom"
+           class="absolute top-0 right-0 z-10
+                   bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-bl-lg">
+        {{ article?.categorie?.nom }}
+      </div>
+
+      <img src="https://via.placeholder.com/600x400/add8e6/000000?text=Image+Article"
+           alt="Image de l'article"
+           class="w-full h-48 object-cover object-center">
+      <div class="p-6 flex flex-col justify-between h-auto">
+        <div class="mb-4">
+          <h2 class="text-2xl font-bold text-gray-900 mb-2 leading-tight">
+            <a [routerLink]="['/article', article?.id]"
+               class="hover:text-blue-700 transition-colors duration-200">
+              {{ article?.titre }}
+            </a>
+          </h2>
+          <p class="text-gray-700 text-base mb-4 line-clamp-3">{{ article?.description }}</p>
+        </div>
+
+        <div class="flex justify-between items-center text-gray-600 text-sm mt-auto">
+          <span class="flex items-center">
+            <mat-icon class="material-icons-outlined text-base mr-1 text-blue-500">calendar_today</mat-icon>
+            {{ article?.date | date:'mediumDate' }}
+          </span>
+          <a [routerLink]="['/article', article?.id]"
+             class="text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200 flex items-center">
+            Lire la suite
+            <mat-icon class="text-base ml-1">arrow_forward</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-center items-center space-x-5 mt-16">
+    <button
+      (click)="previousPage()"
+      [disabled]="currentPage === 1"
+      class="px-7 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out"
+    >
+      <mat-icon class="text-white text-lg mr-2">arrow_back</mat-icon> Précédent
+    </button>
+    <span class="text-xl font-bold text-gray-800">Page {{ currentPage }} sur {{ articles.length }}</span>
+    <button
+      (click)="nextPage()"
+      [disabled]="!hasMoreArticles()"
+      class="px-7 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 ease-in-out"
+    >
+      Suivant <mat-icon class="text-white text-lg ml-2">arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>

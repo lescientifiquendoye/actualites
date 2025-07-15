@@ -1,0 +1,87 @@
+<div class="container mx-auto px-4 py-8 lg:px-8 max-w-2xl">
+  <h1 class="text-4xl font-extrabold text-blue-800 mb-8 text-center">
+    {{ isEditMode ? 'Modifier l\'article' : 'Ajouter un Nouvel Article' }}
+  </h1>
+
+  <div class="bg-white rounded-xl shadow-xl p-8 mb-8">
+    <form (ngSubmit)="saveArticle()" #articleForm="ngForm">
+      <div class="mb-5">
+        <label for="titre" class="block text-blue-700 text-sm font-bold mb-2">Titre de l'article</label>
+        <div class="relative">
+          <input type="text" id="titre" name="titre" [(ngModel)]="newArticle.titre" required
+                 class="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10">
+          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500">title</mat-icon>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="description" class="block text-blue-700 text-sm font-bold mb-2">Description courte</label>
+        <div class="relative">
+          <textarea id="description" name="description" [(ngModel)]="newArticle.description" rows="3" required
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y pr-10"></textarea>
+          <mat-icon class="absolute right-3 top-3 text-blue-500">description</mat-icon>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="contenu" class="block text-blue-700 text-sm font-bold mb-2">Contenu détaillé de l'article</label>
+        <div class="relative">
+          <textarea id="contenu" name="contenu" [(ngModel)]="newArticle.contenu" rows="10" required
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-y pr-10"></textarea>
+          <mat-icon class="absolute right-3 top-3 text-blue-500">article</mat-icon>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="date" class="block text-blue-700 text-sm font-bold mb-2">Date de publication</label>
+        <div class="relative">
+          <input type="date" id="date" name="date" [(ngModel)]="newArticle.date" required
+                 class="shadow appearance-none border rounded w-full py-2 px-3 text-blue-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10">
+          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500">event</mat-icon>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <label for="categorie" class="block text-blue-700 text-sm font-bold mb-2">Catégorie</label>
+        <div class="relative">
+          <select id="categorie" name="categorieId" [(ngModel)]="newArticle.categorieId" required
+                  class="block appearance-none w-full bg-white border border-blue-400 text-blue-700 py-2 px-3 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10">
+            <option [ngValue]="0" disabled>Sélectionnez une catégorie</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.nom }}</option>
+          </select>
+          <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-500">category</mat-icon>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-blue-700">
+            <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15 8.293V14a1 1 0 01-1 1H6a1 1 0 01-1-1V8.293l4-4z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <button type="submit"
+                [disabled]="!articleForm.valid"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-200 ease-in-out
+                       disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center">
+          <mat-icon class="mr-2"> {{ isEditMode ? 'save' : 'add_circle' }} </mat-icon>
+          {{ isEditMode ? 'Enregistrer les modifications' : 'Ajouter l\'article' }}
+        </button>
+
+        <!-- <button disabled="true" type="button" (click)="resetForm()"
+                class="bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-200 ease-in-out flex items-center">
+          <mat-icon class="mr-2">refresh</mat-icon> Réinitialiser
+        </button> -->
+
+        <button type="button" (click)="goBack()"
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-200 ease-in-out flex items-center">
+          <mat-icon class="mr-2">arrow_back</mat-icon> Retour
+        </button>
+      </div>
+
+      <div *ngIf="successMessage" class="mt-4 p-3 bg-green-100 text-green-700 rounded-md">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="mt-4 p-3 bg-red-100 text-red-700 rounded-md">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>

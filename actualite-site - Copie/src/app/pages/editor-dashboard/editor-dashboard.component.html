@@ -1,0 +1,25 @@
+<div class="container mx-auto px-4 py-8">
+  <h2 class="text-4xl font-extrabold text-gray-900 mb-8 text-center">Tableau de Bord Éditeur</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center justify-center text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+         [routerLink]="['/editeur/articles']">
+      <mat-icon class="text-blue-600 text-6xl mb-4">article</mat-icon>
+      <h3 class="text-2xl font-semibold text-gray-800 mb-2">Gérer les Articles</h3>
+      <p class="text-gray-600">Ajoutez, modifiez ou supprimez les articles du site.</p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center justify-center text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+         [routerLink]="['/editeur/categories']">
+      <mat-icon class="text-green-600 text-6xl mb-4">category</mat-icon>
+      <h3 class="text-2xl font-semibold text-gray-800 mb-2">Gérer les Catégories</h3>
+      <p class="text-gray-600">Organisez et modifiez les catégories d'articles.</p>
+    </div>
+    <div *ngIf="curentUser?.role=='ADMIN'" class="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center justify-center text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer"
+         [routerLink]="['/admin/users']">
+      <mat-icon class="text-green-600 text-6xl mb-4">Utilisateur</mat-icon>
+      <h3 class="text-2xl font-semibold text-gray-800 mb-2">Gérer les Utilisateurs</h3>
+      <p class="text-gray-600"> ajouter, lister, modifier ou supprimer des utilisateurs</p>
+    </div>
+  </div>
+</div>

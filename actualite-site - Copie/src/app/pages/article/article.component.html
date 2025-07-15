@@ -1,0 +1,40 @@
+<div class="container mx-auto px-4 py-8 lg:px-8 max-w-4xl">
+  <button (click)="goBack()"
+          class="inline-flex items-center px-4 py-2 mb-8
+                 bg-gray-100 text-gray-700 rounded-lg shadow-sm
+                 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+                 transition duration-200 ease-in-out">
+    <mat-icon class="text-lg mr-2">arrow_back</mat-icon>
+    Retour aux articles
+  </button>
+
+  <div *ngIf="article" class="bg-white rounded-xl shadow-xl overflow-hidden p-8">
+    <img src='https://via.placeholder.com/1200x600/add8e6/000000?text=Image+Article+Detail'
+         alt="Image de l'article"
+         class="w-full h-96 object-cover object-center rounded-lg mb-8 shadow-md">
+
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+      {{ article.titre }}
+    </h1>
+
+    <p class="text-gray-600 text-base sm:text-lg mb-6 flex items-center flex-wrap">
+      <span class="flex items-center mr-4">
+        <mat-icon class="material-icons-outlined text-lg mr-2 text-blue-500">calendar_today</mat-icon>
+        <em class="font-medium">{{ article.date | date:'fullDate' }}</em>
+      </span>
+      <span *ngIf="article.categorie" class="flex items-center">
+        <mat-icon class="material-icons-outlined text-lg mr-2 text-blue-500">label</mat-icon>
+        <em class="font-medium text-blue-700">{{ article.categorie.nom }}</em>
+      </span>
+    </p>
+
+    <div class="prose prose-lg max-w-none text-gray-800 leading-relaxed" [innerHTML]="article.contenu">
+    </div>
+
+    <hr class="my-10 border-gray-200">
+  </div>
+
+  <div *ngIf="!article" class="bg-white rounded-xl shadow-lg p-8 text-center text-gray-600 text-lg">
+    Chargement de l'article... ou Article non trouvé.
+  </div>
+</div>

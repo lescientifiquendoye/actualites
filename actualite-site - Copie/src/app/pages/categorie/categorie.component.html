@@ -1,0 +1,5 @@
+<h2>Articles dans la catégorie : {{ nomCategorie }}</h2>
+<div *ngFor="let article of articles">
+  <h3><a [routerLink]="['/article', article.id]">{{ article.titre }}</a></h3>
+  <p>{{ article.description }}</p>
+</div>
