@@ -79,7 +79,7 @@ public class SecurityConfig {
                         ).permitAll()
 
                         // Routes protégées par rôle
-                        .requestMatchers("/api/articles/**", "/api/categories/**").hasAnyRole("EDITEUR", "ADMIN")
+                        .requestMatchers("/api/articles/**", "/api/categories/**","/api/categories/*").hasAnyRole("EDITEUR", "ADMIN")
                         .requestMatchers("/api/utilisateur/**","/api/utilisateur", "/api/token/**").hasRole("ADMIN")
 
                         // Toutes les autres requêtes nécessitent une authentification
