@@ -4,6 +4,7 @@ import com.model.Utilisateur;
 import com.repository.UtilisateurRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,9 +17,11 @@ import java.util.Map;
 public class UtilisateurController {
 
     private final UtilisateurRepository utilisateurRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UtilisateurController(UtilisateurRepository utilisateurRepository) {
+    public UtilisateurController(UtilisateurRepository utilisateurRepository, PasswordEncoder passwordEncoder) {
         this.utilisateurRepository = utilisateurRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -39,6 +42,7 @@ public class UtilisateurController {
 
     @PostMapping
     public Utilisateur add(@RequestBody Utilisateur utilisateur) {
+        utilisateur.setMotDePasse(passwordEncoder.encode(utilisateur.getMotDePasse()));
         return utilisateurRepository.save(utilisateur);
     }
 
@@ -53,7 +57,7 @@ public class UtilisateurController {
         return utilisateurRepository.findById(id).map(u -> {
             u.setNom(updated.getNom());
             u.setLogin(updated.getLogin());
-            u.setMotDePasse(updated.getMotDePasse());
+            u.setMotDePasse(passwordEncoder.encode(updated.getMotDePasse()));
             u.setRole(updated.getRole());
             return utilisateurRepository.save(u);
         }).orElse(null);

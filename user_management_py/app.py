@@ -5,7 +5,7 @@ import json
 # --- Configuration ---
 API_BASE_URL = "http://localhost:8080/api" # Set this to YOUR ACTUAL BACKEND BASE URL
 LOGIN_ENDPOINT = f"{API_BASE_URL}/auth/login"
-USERS_ENDPOINT = f"{API_BASE_URL}/utilisateur"
+USERS_ENDPOINT = f"{API_BASE_URL}/utilisateurs"
 #ROLES_ENDPOINT = f"{API_BASE_URL}/roles"
 
 # --- Session State Initialization ---
@@ -75,7 +75,7 @@ def login_user(email, password):
         data = response.json()
         st.session_state.jwt_token = data.get("token")
         st.session_state.user_email = email
-        st.session_state.user_role = data.get("role") # Assuming backend sends role
+        st.session_state.user_role = data.get("user").get("role") # Assuming backend sends role
         st.session_state.logged_in = True
         set_message("success", f"Bienvenue, {email}!")
         st.rerun() # Rerun to show main content
@@ -441,12 +441,12 @@ else:
                 st.markdown(f"<p class='table-row'><td><span class='role-badge'>{role_display}</span></td></p>", unsafe_allow_html=True)
             with row_cols[3]:
                 # Streamlit requires unique keys for buttons
-                edit_key = f"edit_{user['id']}"
-                delete_key = f"delete_{user['id']}"
+                edit_key = f"edit_{user['userId']}"
+                delete_key = f"delete_{user['userId']}"
 
                 # Use columns within this cell to place buttons side-by-side
                 btn_col1, btn_col2 = st.columns(2)
                 with btn_col1:
                     st.button("✏️", key=edit_key, on_click=on_edit_user_click, args=(user,), help="Modifier", type="secondary")
                 with btn_col2:
-                    st.button("🗑️", key=delete_key, on_click=on_delete_user_click, args=(user['id'],), help="Supprimer", type="secondary")
+                    st.button("🗑️", key=delete_key, on_click=on_delete_user_click, args=(user['userId'],), help="Supprimer", type="secondary")
